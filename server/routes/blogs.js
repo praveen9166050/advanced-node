@@ -18,7 +18,7 @@ router.get('/api/blogs/:id', requireLogin, async (req, res) => {
 
 router.get('/api/blogs', requireLogin, async (req, res) => {
   try {
-    const blogs = await Blog.find({ _user: req.user.id });
+    const blogs = await Blog.find({ _user: req.user.id }).cache();
     res.json(blogs);
   } catch (error) {
     res.status(500).json(error);

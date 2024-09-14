@@ -6,6 +6,7 @@ const keys = require('./configs/keys');
 const authRoutes = require('./routes/auth');
 const blogRoutes = require('./routes/blogs');
 require('./services/passport');
+require('./services/cache');
 
 const app = express();
 
