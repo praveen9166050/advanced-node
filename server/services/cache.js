@@ -31,7 +31,14 @@ mongoose.Query.prototype.exec = async function () {
     ? parsedValue.map(item => new this.model(item))
     : new this.model(parsedValue);
   }
+  // console.log("DB");
   const result = await exec.apply(this, arguments);
   await client.hset(this.hashKey, key, JSON.stringify(result));
   return result;
+}
+
+module.exports = {
+  async clearHash(hashKey) {
+    await client.del(JSON.stringify(hashKey));
+  }
 }

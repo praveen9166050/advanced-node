@@ -1,6 +1,7 @@
 const express = require('express');
 const requireLogin = require('../middlewares/requireLogin');
 const Blog = require('../models/Blog');
+const cleanCache = require('../middlewares/cleanCache');
 
 const router = express.Router();
 
@@ -25,14 +26,13 @@ router.get('/api/blogs', requireLogin, async (req, res) => {
   }
 });
 
-router.post('/api/blogs', requireLogin, async (req, res) => {
+router.post('/api/blogs', requireLogin, cleanCache, async (req, res) => {
   const { title, content } = req.body;
   const blog = new Blog({
     title,
     content,
     _user: req.user.id
   });
-
   try {
     await blog.save();
     res.json(blog);
